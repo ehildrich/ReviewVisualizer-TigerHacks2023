@@ -3,72 +3,108 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-# TODO
-# make this beautiful
+class Scraper:
+    def __init__(self, search_text, PAGINATION_RANGE = 100):
 
-# initial conditions for selenium to simulate the next button
-options = webdriver.ChromeOptions()
-options.add_argument('--ignore-certificate-errors')
-options.add_argument('--incognito')
-options.add_argument('--headless')
-driver = webdriver.Chrome(options)
+        # initialize selenium
+        # initial conditions for selenium to simulate the next button
+        self.options = webdriver.ChromeOptions()
+        self.driver = webdriver.Chrome()
+        self.url = ""
+        self.search_text = search_text; 
+        self.PAGINATION_RANGE = PAGINATION_RANGE 
+        self.critic_responses = []
 
-def generate_search_url(search_text):
-    # i don't know what the technical term for this is
-    plus_text = search_text.replace(" ", "+")
-    return f"https://www.rottentomatoes.com/search?search={plus_text}"
+    def initialize_driver(self, *argv):
+        for arg in argv:
+            self.options.add_argument(arg)
 
-# generate a movie url
-# the easy way, but can't guarantee results
-# example: "The Matrix" is only "matrix" in rotten tomatoes so can't give results
-def get_movie_review_url(movie_name):
-    lower_name = movie_name.lower()
-    formatted_text = lower_name.replace(" ", "_").replace("'","")
-    url = f"https://www.rottentomatoes.com/m/{formatted_text}/reviews"
-    print(type(url))
-    return url
+        self.driver = webdriver.Chrome(self.options)
 
-# the selenium way so uses rotten tomato's search engine
-# lots of breaking point
-# if the website is updated the code needs to get updated
-def get_movie_review_url_search(search_url):
-    search_results_page = driver.get(search_url)
+    def get_search_url(self, search_text):
+        # i don't know what the technical term for this is
+        plus_text = search_text.replace(" ", "+")
+        return f"https://www.rottentomatoes.com/search?search={plus_text}"
 
-    movies_tab_select = driver.find_element(By.XPATH, "//*[@id='search-results']/nav/ul/li[3]")
-    movies_tab_select.click()
+    # the selenium way so uses rotten tomato's search engine
+    # lots of breaking point
+    # if the website is updated the code needs to get updated
+    def get_review_url(self, search_url):
+        search_results_page = self.driver.get(search_url)
 
-    first_result = driver.find_element(By.XPATH, "//*[@id='search-results']/search-page-result[2]/ul/search-page-media-row/a[2]")
-    movie_url = first_result.get_attribute('href')
+        # xpath is the way to access html elements  
+        movies_tab_select = self.driver.find_element(By.XPATH, "//*[@id='search-results']/nav/ul/li[@data-filter='movie']")
+        movies_tab_select.click()
 
-    return f"{movie_url}/reviews"
+        first_result = self.driver.find_element(By.XPATH, "//*[@id='search-results']/search-page-result[@type='movie']/ul/search-page-media-row[1]/a[@slot='title']")
+        movie_url = first_result.get_attribute('href')
 
-# search text 
-url = get_movie_review_url_search(generate_search_url('life of brian'))
-
-driver.get(url)
-
-# get next button
-next_btn = driver.find_element(By.XPATH, "//*[@id='reviews']/div[1]/rt-button[2]") 
-
-# response array
-critic_responses = []
-
-for i in range(0,100):
+        return f"{movie_url}/reviews"
     
-    # get the page source from selenium
-    page = driver.page_source
-    parsedText = BeautifulSoup(page, "html.parser")
-    review_div = parsedText.findAll("p", class_="review-text")
-    
-    # store all the responses in an array
-    for review_text in review_div:
-            critic_responses.append(review_text.text)
-    try: 
-        next_btn.click()
+    def scrape(self):
+        self.search_url = self.get_search_url(self.search_text)
+        self.url = self.get_review_url(self.search_url) 
+
+        # use the driver to get the website
+        self.driver.get(self.url)
+
+        # get next button
+        next_btn = self.driver.find_element(By.XPATH, "//*[@id='reviews']/div[1]/rt-button[2]") 
+
+        for i in range(0,self.PAGINATION_RANGE):
+            
+            # get the page source from selenium
+            page = self.driver.page_source
+            parsedText = BeautifulSoup(page, "html.parser")
+
+            # the reviews are <p> inside html <div> with classname "review-text" 
+            review_div = parsedText.findAll("p", class_="review-text")
+            
+            # store all the responses in an array
+            for review_text in review_div:
+                    self.critic_responses.append(review_text.text)
+            try: 
+                next_btn.click()
+            except:
+                break
+
+        # close the selenium driver
+        self.driver.close()
+
+# test code
+def test():
+    movies = ['the 400 blows', 'dark night rises', 'avengers endgame', 'life of brian', 'a hard days night',
+                'home alone', 'the hangover', 'the hangover 2', 'the godfather', 'wolf of wall street']
+    #example use case
+
+    error_movie = ""
+   
+    try:
+        for movie in movies:
+
+            error_movie = movie
+            # pass a movie name, and number of pages to look for <optional>
+            # test cases
+
+            scraper = Scraper(movie)
+            #scraper.initialize_driver("--ignore-certificate-error", "--incognito", "--headless")
+            scraper.scrape()
+            print(scraper.url)
+        print('Scraped successfully')
     except:
-        break
+        print('error scraping')
+        print(error_movie)
+    # critic response array in scraper.critic_responses
 
-# close the selenium driver
-driver.close()
+# main function to test functionality 
+def main():
+    scraper = Scraper("dark night rises")
+    scraper.initialize_driver("--ignore-certificate-error", "--incognito", "--headless")
+    scraper.scrape()
 
-print(critic_responses)
+    # uncomment the following line to display the responses
+    print(scraper.critic_responses)
+
+#__name__ == "__main__"
+    # test()
+    # main()
