@@ -71,40 +71,10 @@ class Scraper:
         # close the selenium driver
         self.driver.close()
 
-# test code
-def test():
-    movies = ['the 400 blows', 'dark night rises', 'avengers endgame', 'life of brian', 'a hard days night',
-                'home alone', 'the hangover', 'the hangover 2', 'the godfather', 'wolf of wall street']
-    #example use case
-
-    error_movie = ""
-   
-    try:
-        for movie in movies:
-
-            error_movie = movie
-            # pass a movie name, and number of pages to look for <optional>
-            # test cases
-
-            scraper = Scraper(movie)
-            #scraper.initialize_driver("--ignore-certificate-error", "--incognito", "--headless")
-            scraper.scrape()
-            print(scraper.url)
-        print('Scraped successfully')
-    except:
-        print('error scraping')
-        print(error_movie)
-    # critic response array in scraper.critic_responses
-
-# main function to test functionality 
-def main():
-    scraper = Scraper("dark night rises")
-    scraper.initialize_driver("--ignore-certificate-error", "--incognito", "--headless")
-    scraper.scrape()
-
-    # uncomment the following line to display the responses
-    print(scraper.critic_responses)
-
-#__name__ == "__main__"
-    # test()
-    # main()
+# example use 
+#    scraper = Scraper("dark night rises", 10) # pulls reviews from 10 pages
+#    scraper.initialize_driver("--ignore-certificate-error", "--incognito", "--headless")
+#    scraper.scrape()
+#
+#    # uncomment the following line to display the responses
+#    print(scraper.critic_responses)
