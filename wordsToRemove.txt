@@ -106,3 +106,12 @@ many
 neither
 all
 none
+in
+on
+its
+with
+by
+are
+has
+had
+have
