@@ -11,6 +11,11 @@ def stripWordList(wordList, wordsToRemove):
     for word in wordList: 
         wordString = ""
         for char in word: 
+            # This removes words beginning with a capital letter in order to removes names and 
+            # titles from the word list
+            if char.isupper(): 
+                break
+
             if char.isalnum(): 
                 wordString += char.lower()
         
