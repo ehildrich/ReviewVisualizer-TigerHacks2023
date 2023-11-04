@@ -1,22 +1,27 @@
-
-def reviewToWords(review): 
+# Splits a string of text into individual words
+def textToWords(review): 
     wordList = review.split()
     return wordList
 
-def stripWords(wordList): 
+# Removes all puncuation from words and removes filler words from a preset list
+def stripWordList(wordList, wordsToRemove): 
     cleanWords = []
+    
+    # Assemble each word and only include alphanumeric characters
     for word in wordList: 
         wordString = ""
         for char in word: 
             if char.isalnum(): 
-                wordString += char
+                wordString += char.lower()
         
-        if wordString != "" and wordString.isalpha(): 
-            cleanWords.append(wordString.lower())
+        # Remove empty words, words that are only numbers, and words in the filler list. 
+        if wordString != "" and wordString.isalpha() and not wordString in wordsToRemove: 
+            cleanWords.append(wordString)
             
     return cleanWords  
 
-def getWordsToRemove(): 
+# Pull the list of filler words from the file. 
+def getWordsToRemove(title): 
     try: 
         wordsFile = open("wordsToRemove.txt", 'r')
     except Exception:
@@ -25,17 +30,27 @@ def getWordsToRemove():
         exit(1)
     else: 
         wordsToRemove = wordsFile.readlines()
+        for word in range(len(wordsToRemove)): 
+            wordsToRemove[word] = wordsToRemove[word][:-1]
+        
+        # The words in the title of the film are also added to the list
+        titleWords = textToWords(title)
+        titleWords = stripWordList(titleWords, wordsToRemove)
+        wordsToRemove += titleWords
+        
     finally: 
         wordsFile.close()
         return wordsToRemove
-        
 
 
+# Given a list of reviews, convert it into a list of words excluding filler
+def createWordList(reviews, wordsToRemove): 
+    finalWordList = []
+    
+    for review in reviews: 
+        currentWordList = textToWords(review)
+        currentWordList = stripWordList(currentWordList, wordsToRemove)
+        finalWordList += currentWordList
+    
+    return finalWordList
 
-wordsToRemove = getWordsToRemove()
-print(wordsToRemove)
-
-exampleReview = "Overall, the film needed more of the tension the video game series is known for, not to mention their arcade-fun terror, but it still serves as a solid 1987 Five Nights at Freddy’s franchise opener."
-words = reviewToWords(exampleReview)
-print(stripWords(words))
-input('Press ENTER to exit')
