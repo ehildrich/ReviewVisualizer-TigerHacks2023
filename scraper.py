@@ -6,16 +6,22 @@ from selenium.webdriver.common.by import By
 class Scraper:
     def __init__(self, search_text, PAGINATION_RANGE = 100):
 
-        # initialize selenium
-        # initial conditions for selenium to simulate the next button
-        self.options = webdriver.ChromeOptions()
-        self.driver = webdriver.Chrome()
+        # initial conditions for selenium to simulate the buttons
+        self.options = webdriver.ChromeOptions() 
+
+        # default conditions
+        self.options.add_argument("--ignore-certificate-error")
+        self.options.add_argument("--incognito")
+        self.options.add_argument("--headless")
+        self.driver = webdriver.Chrome(self.options)
+
         self.url = ""
         self.search_text = search_text; 
         self.PAGINATION_RANGE = PAGINATION_RANGE 
         self.critic_responses = []
         self.movie_name = ""
 
+    # initialize selenium
     def initialize_driver(self, *argv):
         for arg in argv:
             self.options.add_argument(arg)
@@ -23,17 +29,13 @@ class Scraper:
         self.driver = webdriver.Chrome(self.options)
 
     def get_search_url(self, search_text):
-        # i don't know what the technical term for this is
         plus_text = search_text.replace(" ", "+")
         return f"https://www.rottentomatoes.com/search?search={plus_text}"
 
-    # the selenium way so uses rotten tomato's search engine
-    # lots of breaking point
-    # if the website is updated the code needs to get updated
     def get_review_url(self, search_url):
         search_results_page = self.driver.get(search_url)
 
-        # xpath is the way to access html elements  
+        # xpath is the way to access html elements using regular expressions  
         movies_tab_select = self.driver.find_element(By.XPATH, "//*[@id='search-results']/nav/ul/li[@data-filter='movie']")
         movies_tab_select.click()
 
@@ -55,7 +57,6 @@ class Scraper:
         # get the movie name
         page = self.driver.page_source
         parsedText = BeautifulSoup(page, "html.parser")
-
         self.movie_name = parsedText.find("a", class_="sidebar-title").text 
 
         for i in range(0,self.PAGINATION_RANGE):
