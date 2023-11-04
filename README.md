@@ -1,18 +1,18 @@
 # ReviewVisualizer-TigerHacks2023
 Our submission to TigerHacks 2023. 
 
-##About the Project
+## About the Project
 
-###Built With
+### Built With
 
-##Getting Started
+## Getting Started
 
-###Prerequisites
+### Prerequisites
 
-###Installation
+### Installation
 
-##Usage
+## Usage
 
-##Contact
+## Contact
 
-##Acknowledgements
+## Acknowledgements
