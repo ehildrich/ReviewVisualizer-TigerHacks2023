@@ -11,6 +11,7 @@ from scraper import Scraper
 
 #setup scraper
 scraper = Scraper("dark night rises")
+# makes sure the browser runs in background
 scraper.initialize_driver("--ignore-certificate-error", "--incognito", "--headless")
 scraper.scrape()
 
