@@ -7,8 +7,12 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 
 import calculator
-import scraper
+from scraper import Scraper
 
+#setup scraper
+scraper = Scraper("dark night rises")
+scraper.initialize_driver("--ignore-certificate-error", "--incognito", "--headless")
+scraper.scrape()
 
 reviews = scraper.critic_responses
 
