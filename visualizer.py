@@ -17,6 +17,7 @@ review_words = calculator.createWordList(reviews, calculator.getWordsToRemove(""
 
 #put list into dataframe
 review_words_df = pd.DataFrame(review_words, columns = ['Word'])
+word_counts = review_words_df.groupby(['Word'])
 
 #create word cloud object
 wc = WordCloud(background_color="white", font_path="./arial.ttf")
