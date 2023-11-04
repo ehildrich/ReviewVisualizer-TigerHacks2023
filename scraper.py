@@ -14,6 +14,7 @@ class Scraper:
         self.search_text = search_text; 
         self.PAGINATION_RANGE = PAGINATION_RANGE 
         self.critic_responses = []
+        self.movie_name = ""
 
     def initialize_driver(self, *argv):
         for arg in argv:
@@ -50,6 +51,12 @@ class Scraper:
 
         # get next button
         next_btn = self.driver.find_element(By.XPATH, "//*[@id='reviews']/div[1]/rt-button[2]") 
+
+        # get the movie name
+        page = self.driver.page_source
+        parsedText = BeautifulSoup(page, "html.parser")
+
+        self.movie_name = parsedText.find("a", class_="sidebar-title").text 
 
         for i in range(0,self.PAGINATION_RANGE):
             
