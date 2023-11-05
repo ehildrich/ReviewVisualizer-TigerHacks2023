@@ -5,6 +5,7 @@ import visualizer
 import asyncio
 import threading
 
+images = []
 
 # multithreading and async stuff to not block the gui while scraper is running
 def scrape():
@@ -23,13 +24,26 @@ async def async_scraper():
         scraper.scrape()
         visualizer.review_visuals(scraper.critic_responses, scraper.movie_name)
 
-        cloud = PhotoImage(file="wordcloud.png")
+        cloud = PhotoImage(file="wordcloud.png").zoom(2, 2)
+        images.append(cloud)
+        image.configure(image=cloud)
 
     loadingLabel.grid_remove()
 
+def displayGraph(): 
+    graph = PhotoImage(file="review_bar_graph.png").subsample(2, 2)
+    if graph not in images: 
+        images.append(graph)
+    image.configure(image=graph)
+
+def displayCloud(): 
+    cloud = PhotoImage(file="wordcloud.png").zoom(2, 2)
+    if cloud not in images: 
+        images.append(cloud)
+    image.configure(image=cloud)
+
 root = Tk()
 root.title("Film Review Visualizer")
-root.geometry("500x500")
 
 mainFrame = ttk.Frame(root, padding="10 10 10 10")
 
@@ -46,10 +60,11 @@ titleInput = ttk.Entry(mainFrame, textvariable=filmTitle)
 # i.e. the scrape only runs after pressing the button
 submitButton = ttk.Button(mainFrame, text="Go", command = lambda: scrape())
 
-imageFrame = ttk.LabelFrame(mainFrame, text="Output", width=600, height=500, borderwidth=5)
+imageFrame = ttk.LabelFrame(mainFrame, text="Output", width=600, height=450, borderwidth=5)
+image = ttk.Label(imageFrame, text="Nothing yet")
 
-graphButton = ttk.Button(mainFrame, text="Graph")
-cloudButton = ttk.Button(mainFrame, text="Cloud")
+graphButton = ttk.Button(mainFrame, text="Graph", command=displayGraph)
+cloudButton = ttk.Button(mainFrame, text="Cloud", command=displayCloud)
 
 
 mainFrame.grid(column=0, row=0, sticky=(N, W, E, S))
@@ -59,6 +74,7 @@ loadingLabel.grid(column = 0, row = 2, pady = 5, padx = 5, sticky = (E, W))
 titleInput.grid(column=2, row=1, columnspan=2, padx=5, pady=5, sticky=(E, W))
 submitButton.grid(column=2, row=2, columnspan=2, padx=5, pady=5, sticky=(E, W))
 imageFrame.grid(column=0, row=3, columnspan=4)
+image.grid(column=0, row=0, sticky=(N, W, E, S))
 graphButton.grid(column=2, row=4)
 cloudButton.grid(column=3, row=4)
 

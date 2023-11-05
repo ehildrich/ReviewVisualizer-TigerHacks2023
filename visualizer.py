@@ -34,9 +34,10 @@ def review_visuals(reviews, movie_title):
     plt.figure(figsize=(15, 10))
     plt.axis("on")
     word_counts.size().sort_values(ascending=False).head(15).plot.bar(color=colors)
-    plt.xticks(rotation=50)
-    plt.xlabel("Words Used in Movie Reviews")
-    plt.ylabel("Frequency of Words")
+    plt.rc("xtick", labelsize=20)
+    plt.xticks(rotation=50, fontsize="x-large")
+    plt.xlabel("Words Used in Movie Reviews", fontsize="x-large")
+    plt.ylabel("Frequency of Words", fontsize="x-large")
 
     # Display the graph
     plt.savefig("review_bar_graph.png", bbox_inches="tight")
