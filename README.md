@@ -43,8 +43,8 @@ The entire project was built in Python. The particular packages used in each sec
    ```
    git clone https://github.com/ehildrich/ReviewVisualizer-Tigerhacks2023
    ```
-2. Open `main.py` and run in Python editor.
-3. Type in a movie title when prompted.
+2. Open `gui.py` and run in Python editor.
+3. Type a movie title into the text field and click the "Go" button. 
 
 ## Usage
 
