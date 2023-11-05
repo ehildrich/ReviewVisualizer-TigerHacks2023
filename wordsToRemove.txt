@@ -218,3 +218,6 @@ sure
 surely
 makes
 take
+was
+back
+front

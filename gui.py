@@ -9,7 +9,7 @@ import threading
 # multithreading and async stuff to not block the gui while scraper is running
 def scrape():
     threading.Thread(target = run_async_scraper, daemon=True).start()
-    print("async process started") 
+    loadingLabel.grid()
 
 def run_async_scraper():
     loop = asyncio.new_event_loop()
@@ -23,6 +23,10 @@ async def async_scraper():
         scraper.scrape()
         visualizer.review_visuals(scraper.critic_responses, scraper.movie_name)
 
+        cloud = PhotoImage(file="wordcloud.png")
+
+    loadingLabel.grid_remove()
+
 root = Tk()
 root.title("Film Review Visualizer")
 
@@ -32,6 +36,7 @@ logoImage = PhotoImage(file="ReelEyesLogo.png").subsample(6, 6)
 logo = ttk.Label(mainFrame, text="placeholder", image=logoImage)
 
 label = ttk.Label(mainFrame, text="Enter the name of a film.", font="TkHeadingFont")
+loadingLabel = ttk.Label( anchor = CENTER )
 
 filmTitle = StringVar()
 titleInput = ttk.Entry(mainFrame, textvariable=filmTitle)
@@ -49,6 +54,7 @@ cloudButton = ttk.Button(mainFrame, text="Cloud")
 mainFrame.grid(column=0, row=0, sticky=(N, W, E, S))
 logo.grid(column=0, row=0, columnspan=2, rowspan=3)
 label.grid(column=2, row=0, columnspan=2, padx=5, pady=5, sticky=(E, W))
+loadingLabel.grid(column = 0, row = 2, pady = 5, padx = 5, sticky = (E, W))
 titleInput.grid(column=2, row=1, columnspan=2, padx=5, pady=5, sticky=(E, W))
 submitButton.grid(column=2, row=2, columnspan=2, padx=5, pady=5, sticky=(E, W))
 imageFrame.grid(column=0, row=3, columnspan=4)
@@ -68,5 +74,29 @@ mainFrame.rowconfigure(2, weight=1)
 mainFrame.rowconfigure(3, weight=1)
 mainFrame.rowconfigure(4, weight=1)
 
+# make the loading gif invisible first
+loadingLabel.grid_remove()
 
+# stuff for gif
+frame_list = []
+frame_index = 0
+last_frame = 0
+
+while True:
+    try:
+        part = f'gif -index {frame_index}'
+        frame = PhotoImage(file = './loadingSMALL.gif', format = part)
+    except:
+        last_frame = frame_index - 1
+        break
+    frame_list.append(frame)
+    frame_index += 1
+
+def animate_frames(frame_number = 0 ):
+    if frame_number > last_frame:
+        frame_number = 0
+    loadingLabel.config(image = frame_list[frame_number])
+    root.after(100, animate_frames, frame_number + 1) 
+    
+animate_frames()
 root.mainloop()
