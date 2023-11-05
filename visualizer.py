@@ -6,19 +6,10 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 
 import calculator
-from scraper import Scraper
 
-def review_visuals(movie_title):
-    #setup scraper
-    scraper = Scraper(movie_title)
-    # makes sure the browser runs in background
-    scraper.initialize_driver("--ignore-certificate-error", "--incognito", "--headless")
-    scraper.scrape()
-
-    reviews = scraper.critic_responses
-
+def review_visuals(reviews, movie_title):
     #list of all significant words in all reviews
-    review_words = calculator.createWordList(reviews, calculator.getWordsToRemove(scraper.search_text))
+    review_words = calculator.createWordList(reviews, calculator.getWordsToRemove(movie_title))
 
     #put list into dataframe
     review_words_df = pd.DataFrame(review_words, columns = ['Word'])
