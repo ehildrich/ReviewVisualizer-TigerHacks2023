@@ -125,6 +125,8 @@ shall
 can
 cannot
 dont
+does
+doesnt
 from
 one
 two
@@ -211,3 +213,8 @@ always
 sometimes
 often
 occasionally
+any
+sure
+surely
+makes
+take
