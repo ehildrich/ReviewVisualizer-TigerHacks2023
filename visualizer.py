@@ -10,7 +10,7 @@ from scraper import Scraper
 
 def review_visuals(movie_title):
     #setup scraper
-    scraper = Scraper("dark night rises")
+    scraper = Scraper(movie_title)
     # makes sure the browser runs in background
     scraper.initialize_driver("--ignore-certificate-error", "--incognito", "--headless")
     scraper.scrape()
