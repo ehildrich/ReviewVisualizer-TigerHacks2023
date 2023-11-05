@@ -55,5 +55,5 @@ The entire project was built in Python. The particular packages used in each sec
 - Beamlak Tekle: BeamlakTekle 
 
 ## Acknowledgements
-The wordcloud Python package was developed by Github user amueller and is available [here](amueller.github.io/word_cloud)
-The documentation for [Tkinter](https://tkdocs.com/index.html) was referred to extensively for this project. 
+- The wordcloud Python package was developed by Github user amueller and is available [here](amueller.github.io/word_cloud)
+- The documentation for [Tkinter](https://tkdocs.com/index.html) was referred to extensively for this project. 
