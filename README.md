@@ -52,7 +52,7 @@ The entire project was built in Python. The particular packages used in each sec
 - Dottie Hildrich: ehlidrich
 - Roshan Thapa Magar: rosnMagar
 - Rebecca Rushman: rrushman02
-- Beamlak Tekle: 
+- Beamlak Tekle: BeamlakTekle 
 
 ## Acknowledgements
 The wordcloud Python package was developed by Github user amueller and is available [here](amueller.github.io/word_cloud)
