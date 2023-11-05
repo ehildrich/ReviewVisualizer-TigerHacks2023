@@ -1,4 +1,4 @@
-# REEL EYES ReviewVisualizer-TigerHacks2023
+# ReelEyes ReviewVisualizer-TigerHacks2023
 
 ## About the Project
 
