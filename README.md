@@ -11,10 +11,10 @@ This project is our submission to University of Missouri's TigerHacks 2023 event
 
 The entire project was built in Python. The particular packages used in each section will be listed below.
 
-####Front-End
+#### Front-End
 - 
 
-####Back-End
+#### Back-End
 - Beautiful Soup
 - Pandas
 - Matplotlib
