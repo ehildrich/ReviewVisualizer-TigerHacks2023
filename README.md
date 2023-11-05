@@ -9,6 +9,17 @@ This project is our submission to University of Missouri's TigerHacks 2023 event
 
 ### Built With
 
+The entire project was built in Python. The particular packages used in each section will be listed below.
+
+####Front-End
+- 
+
+####Back-End
+- Beautiful Soup
+- Pandas
+- Matplotlib
+- wordcloud (see Acknowledgements)
+
 ## Getting Started
 
 ### Prerequisites
@@ -20,3 +31,4 @@ This project is our submission to University of Missouri's TigerHacks 2023 event
 ## Contact
 
 ## Acknowledgements
+The wordcloud Python package was developed by Github user amueller and is available here: amueller.github.io/word_cloud
