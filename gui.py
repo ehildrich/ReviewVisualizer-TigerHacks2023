@@ -29,6 +29,7 @@ async def async_scraper():
 
 root = Tk()
 root.title("Film Review Visualizer")
+root.geometry("500x500")
 
 mainFrame = ttk.Frame(root, padding="10 10 10 10")
 
