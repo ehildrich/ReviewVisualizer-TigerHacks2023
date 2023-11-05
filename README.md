@@ -19,7 +19,7 @@ The entire project was built in Python. The particular packages used in each sec
 - requests
 - selenium
 - pandas
-- matplotlib
+- matplotlib.pyplot
 - wordcloud (see Acknowledgements)
 
 ## Getting Started
