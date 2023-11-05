@@ -226,3 +226,6 @@ again
 no
 yes
 seen
+ok
+quite
+bit
