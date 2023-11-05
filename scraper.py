@@ -20,6 +20,10 @@ class Scraper:
         self.PAGINATION_RANGE = PAGINATION_RANGE 
         self.critic_responses = []
         self.movie_name = ""
+        self.not_found = ["Not_found", "not_found", 
+            "found_not", "can't_find_the_movie", "movie_not_found", 
+            "no_movie", "movie_no", "no_no_no", "but_no!", "movie_not_found", "movie_not_found"] 
+
 
     # initialize selenium
     def initialize_driver(self, *argv):
@@ -47,16 +51,13 @@ class Scraper:
             return f"{movie_url}/reviews"
         except:
             return "" 
-
     
     def scrape(self):
         self.search_url = self.get_search_url(self.search_text)
         self.url = self.get_review_url(self.search_url) 
 
         if self.url == "":
-            self.critic_responses = ["Not_found", "not_found", 
-            "found_not", "can't_find_the_movie", "movie_not_found", 
-            "no_movie", "movie_no", "no_no_no", "but_no!", "movie_not_found", "movie_not_found"] 
+            self.critic_responses = self.not_found            
             self.driver.close()
             return 
 
@@ -87,6 +88,9 @@ class Scraper:
                 next_btn.click()
             except:
                 break
+
+        if not self.critic_responses:
+            self.critic_responses = self.not_found 
 
         # close the selenium driver
         self.driver.close()
