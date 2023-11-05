@@ -56,4 +56,5 @@ The entire project was built in Python. The particular packages used in each sec
 
 ## Acknowledgements
 - The wordcloud Python package was developed by Github user amueller and is available [here](amueller.github.io/word_cloud)
+- The [following article](https://www.datacamp.com/tutorial/wordcloud-python) from Data Camp was used to guide the implementation of the wordcloud package
 - The documentation for [Tkinter](https://tkdocs.com/index.html) was referred to extensively for this project. 
