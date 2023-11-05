@@ -39,6 +39,11 @@ The entire project was built in Python. The particular packages used in each sec
 
 ### Installation
 
+1. Clone Github repository:
+   ```
+   git clone https://github.com/ehildrich/ReviewVisualizer-Tigerhacks2023
+   ```
+
 ## Usage
 
 ## Contact
