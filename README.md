@@ -15,7 +15,7 @@ The entire project was built in Python. The particular packages used in each sec
 - tkinter
 
 #### Back-End
-- Beautiful Soup
+- Beautifulsoup
 - requests
 - selenium
 - pandas
@@ -26,11 +26,26 @@ The entire project was built in Python. The particular packages used in each sec
 
 ### Prerequisites
 
+1. Install Python: [https://www.python.org/downloads/](https://www.python.org/downloads/)
+2. Install Python dependencies:
+   ```
+   pip install beautifulsoup4
+   pip install requests
+   pip install -U selenium
+   pip install pandas
+   pip install -U matplotlib
+   pip install wordcloud
+   ```
+
 ### Installation
 
 ## Usage
 
 ## Contact
+- Dottie Hildrich: ehlidrich
+- Roshan Thapa Magar: rosnMagar
+- Rebecca Rushman: rrushman02
+- Beamlak Tekle: 
 
 ## Acknowledgements
 The wordcloud Python package was developed by Github user amueller and is available [here](amueller.github.io/word_cloud)
