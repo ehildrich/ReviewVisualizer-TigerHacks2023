@@ -1,9 +1,23 @@
 from tkinter import *
 from tkinter import ttk
 from scraper import Scraper
+import asyncio
+import threading
 
-def scrape(title):
-    scraper = Scraper(title)
+
+# multithreading and async stuff to not block the gui while scraper is running
+def scrape():
+    threading.Thread(target = run_async_scraper, daemon=True).start()
+    print("async process started") 
+
+def run_async_scraper():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(async_scraper())
+    loop.close()
+
+async def async_scraper():
+    scraper = Scraper(filmTitle.get())
     scraper.scrape()
     print(scraper.critic_responses)
 
@@ -20,7 +34,7 @@ titleInput = ttk.Entry(inputFrame, textvariable=filmTitle)
 
 # lambda because we want to call the function instead of passing it as callable
 # i.e. the scrape only runs after pressing the button
-submitButton = ttk.Button(inputFrame, text="Go", command = lambda: scrape(filmTitle.get()))
+submitButton = ttk.Button(inputFrame, text="Go", command = lambda: scrape())
 
 mainFrame.grid(column=0, row=0, sticky=(N, W, E, S))
 inputFrame.grid(column=0, row=0, sticky=(N, W, E, S))
@@ -38,5 +52,6 @@ inputFrame.rowconfigure(0, weight=1)
 inputFrame.rowconfigure(1, weight=1)
 inputFrame.rowconfigure(2, weight=1)
 inputFrame.rowconfigure(3, weight=1)
+
 
 root.mainloop()
