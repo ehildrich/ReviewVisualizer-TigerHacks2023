@@ -36,17 +36,29 @@ class Scraper:
         search_results_page = self.driver.get(search_url)
 
         # xpath is the way to access html elements using regular expressions  
-        movies_tab_select = self.driver.find_element(By.XPATH, "//*[@id='search-results']/nav/ul/li[@data-filter='movie']")
-        movies_tab_select.click()
 
-        first_result = self.driver.find_element(By.XPATH, "//*[@id='search-results']/search-page-result[@type='movie']/ul/search-page-media-row[1]/a[@slot='title']")
-        movie_url = first_result.get_attribute('href')
+        try:
+            movies_tab_select = self.driver.find_element(By.XPATH, "//*[@id='search-results']/nav/ul/li[@data-filter='movie']")
+            movies_tab_select.click()
 
-        return f"{movie_url}/reviews"
+            first_result = self.driver.find_element(By.XPATH, "//*[@id='search-results']/search-page-result[@type='movie']/ul/search-page-media-row[1]/a[@slot='title']")
+            movie_url = first_result.get_attribute('href')
+
+            return f"{movie_url}/reviews"
+        except:
+            return "" 
+
     
     def scrape(self):
         self.search_url = self.get_search_url(self.search_text)
         self.url = self.get_review_url(self.search_url) 
+
+        if self.url == "":
+            self.critic_responses = ["Not_found", "not_found", 
+            "found_not", "can't_find_the_movie", "movie_not_found", 
+            "no_movie", "movie_no", "no_no_no", "but_no!", "movie_not_found", "movie_not_found"] 
+            self.driver.close()
+            return 
 
         # use the driver to get the website
         self.driver.get(self.url)
