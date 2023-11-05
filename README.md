@@ -16,8 +16,10 @@ The entire project was built in Python. The particular packages used in each sec
 
 #### Back-End
 - Beautiful Soup
-- Pandas
-- Matplotlib
+- requests
+- selenium
+- pandas
+- matplotlib
 - wordcloud (see Acknowledgements)
 
 ## Getting Started
